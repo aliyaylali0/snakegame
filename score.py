@@ -10,17 +10,28 @@ class Score(Turtle):
         self.color("white")
         self.goto(0, 265)
         self.score = 0
+        with open("data.txt") as data:
+            self.high_score = int(data.read())
         self.hideturtle()
         self.update_score()
 
     def update_score(self):
-        self.write(f"Score = {self.score}", align=ALIGNMENT, font=FONT)
-    def score_up(self):
-        self.score += 1
         self.clear()
+        self.write(f"Score = {self.score} High score: {self.high_score}", align=ALIGNMENT, font=FONT)
+
+    def reset(self):
+        if self.score > self.high_score:
+            self.high_score = self.score
+            with open("data.txt", mode="w") as data:
+                data.write(f"{self.high_score}")
+        self.score = 0
         self.update_score()
 
-    def game_over(self):
+    """def game_over(self):
         self.goto(0,0)
-        self.write("GAME OVER!", align=ALIGNMENT, font=FONT)
+        self.write("GAME OVER!", align=ALIGNMENT, font=FONT)"""
+
+    def score_up(self):
+        self.score += 1
+        self.update_score()
 
